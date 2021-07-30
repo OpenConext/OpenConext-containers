@@ -1,0 +1,25 @@
+name: Build docker container for the SP Dashboard
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Check out the repo
+      uses: actions/checkout@v2
+
+    - name: Build the Apache container and push to GitHub Packages
+      uses: docker/build-push-action@v1
+      with:
+        dockerfile: docker/httpd/Dockerfile
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+        repository: surfnet/openconext-containers/openconext-httpd
+        tag_with_ref: true
+        push: true
