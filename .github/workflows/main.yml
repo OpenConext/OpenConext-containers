@@ -26,3 +26,11 @@ jobs:
         tags: ghcr.io/openconext/openconext-containers/openconext-httpd:latest
         context: docker/httpd/
         push: true
+
+    - name: Build the php-fpm container and push to GitHub Packages
+      uses: docker/build-push-action@v2
+      with:
+        tags: ghcr.io/openconext/openconext-containers/openconext-phpfpm:latest
+        context: docker/php-fpm/
+        push: true
+      
