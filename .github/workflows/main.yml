@@ -17,9 +17,5 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         dockerfile: docker/httpd/Dockerfile
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: ghcr.io
-        repository: surfnet/openconext-containers/openconext-httpd
-        tag_with_ref: true
+        tags: openconext-containers/openconext-httpd:latest
         push: true
