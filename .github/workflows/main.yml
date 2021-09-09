@@ -18,7 +18,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
-        password: ${{ secrets.GH_CONTAINER_REGISTRY_PAT }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build the Apache container and push to GitHub Packages
       uses: docker/build-push-action@v2
