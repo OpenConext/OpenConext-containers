@@ -1,4 +1,4 @@
-name: Build docker container for the SP Dashboard
+name: Build docker httpd and php-fpm containers
 
 on:
   workflow_dispatch:
@@ -27,10 +27,17 @@ jobs:
         context: docker/httpd/
         push: true
 
-    - name: Build the php-fpm container and push to GitHub Packages
+    - name: Build the php-fpm prod container and push to GitHub Packages
       uses: docker/build-push-action@v2
       with:
         tags: ghcr.io/openconext/openconext-containers/openconext-phpfpm:latest
         context: docker/php-fpm/
+        target: fpmprod
         push: true
-      
+    
+    - name: Build the php-fpm dev container and push to GitHub Packages
+      uses: docker/build-push-action@v2
+      with:
+        tags: ghcr.io/openconext/openconext-containers/openconext-phpfpm-dev:latest
+        context: docker/php-fpm/
+        target: fpmdev
