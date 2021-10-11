@@ -23,7 +23,7 @@ jobs:
     - name: Build the Apache container and push to GitHub Packages
       uses: docker/build-push-action@v2
       with:
-        tags: ghcr.io/openconext/openconext-containers/openconext-httpd:latest
+        tags: ghcr.io/openconext/openconext-containers/openconext-httpd:test
         context: docker/httpd/
         push: true
         secrets: |
