@@ -26,6 +26,8 @@ jobs:
         tags: ghcr.io/openconext/openconext-containers/openconext-httpd:latest
         context: docker/httpd/
         push: true
+        secrets: |
+            "github_token=${{ secrets.GITHUB_TOKEN }}"
 
     - name: Build the php-fpm prod container and push to GitHub Packages
       uses: docker/build-push-action@v2
