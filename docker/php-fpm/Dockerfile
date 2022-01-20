@@ -10,6 +10,7 @@ FROM fpmprod AS fpmdev
 COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
 COPY ./conf/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN apk --update --no-cache add git npm yarn autoconf g++ make && \
+    docker-php-ext-install exif && \
     pecl install -f xdebug && \
     docker-php-ext-enable xdebug && \
     apk del --purge autoconf g++ make
