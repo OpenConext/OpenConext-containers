@@ -1,0 +1,25 @@
+name: Build docker build-php-stepup container
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v2
+
+    - name: Log into GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build the Apache container and push to GitHub Packages
+      uses: docker/build-push-action@v2
+      with:
+        tags: ghcr.io/openconext/openconext-containers/openconext-php-build-stepup:latest
+        context: docker/php-build-stepup/
+        push: true
