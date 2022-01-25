@@ -1,8 +1,5 @@
 FROM php:7.2
 
-ARG NPM_UID=1000
-ARG NPM_GID=1000
-
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     git \
@@ -17,21 +14,25 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
 
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 10
+ENV NODE_VERSION 14
 
 # Install nvm with node and npm
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
-    && source $NVM_DIR/nvm.sh \
+RUN mkdir $NVM_DIR \
+    && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.39.0/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && ln -s $NVM_DIR/nvm.sh /usr/local/bin/nvm \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
-    && nvm use default
+    && nvm use default \
+    && export INSTALLED_NODE_VERSION=$(nvm version) \
+    # Yarn
+    && npm install --global yarn \
+    # Link Node and Yarn to be available using Docker Run
+    && ln -s /usr/local/nvm/versions/node/$INSTALLED_NODE_VERSION/bin/node /usr/local/bin/node \
+    && ln -s /usr/local/nvm/versions/node/$INSTALLED_NODE_VERSION/bin/yarn /usr/local/bin/yarn
 
-    # Composer
+# Composer
 COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
-
-# Fix npm
-RUN mkdir /.npm && chown -R "${NPM_UID}:${NPM_GID}" "/.npm"
-RUN mkdir /.config && chown -R "${NPM_UID}:${NPM_GID}" "/.config"
 
 # Cleanup
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
