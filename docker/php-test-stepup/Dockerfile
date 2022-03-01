@@ -11,6 +11,15 @@ RUN apt-get update && apt-get install -y \
     python \
     zip \
     libpng-dev \
+    wget \
+    libgmp-dev \
+    re2c \
+    libmhash-dev \
+    libmcrypt-dev \
+    file \
+    && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include \
+    && docker-php-ext-configure gmp \
+    && docker-php-ext-install gmp \
     && docker-php-ext-install pdo_mysql exif gd \
     ## APCu
     && pecl install apcu \
@@ -19,7 +28,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
 
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 10
+ENV NODE_VERSION 14
 
 # Install nvm
 # For reference look at: https://github.com/creationix/nvm#install-script
@@ -30,7 +39,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | b
 RUN source $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
-    && nvm use default
+    && nvm use default \
+    && npm install -g yarn
 
 # Composer
 COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
@@ -41,5 +51,4 @@ RUN mkdir /.config && chown -R "${NPM_UID}:${NPM_GID}" "/.config"
 
 # Cleanup
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 WORKDIR /var/www
