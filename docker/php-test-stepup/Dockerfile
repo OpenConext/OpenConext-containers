@@ -21,11 +21,19 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gmp \
     && docker-php-ext-install gmp \
     && docker-php-ext-install pdo_mysql exif gd \
+    ## Xdebug
+    && pecl install xdebug \
     ## APCu
     && pecl install apcu \
     && pecl install apcu_bc-1.0.3 \
     && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
     && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
+
+RUN docker-php-ext-enable xdebug
+RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini
+
+# Xdebug init
+COPY ./conf/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 ENV NVM_DIR /usr/local/nvm
 ENV NODE_VERSION 14
@@ -48,6 +56,7 @@ COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
 # Fix npm
 RUN mkdir /.npm && chown -R "${NPM_UID}:${NPM_GID}" "/.npm"
 RUN mkdir /.config && chown -R "${NPM_UID}:${NPM_GID}" "/.config"
+
 
 # Cleanup
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
