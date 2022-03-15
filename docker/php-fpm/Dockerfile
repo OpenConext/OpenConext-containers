@@ -12,8 +12,6 @@ COPY ./conf/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN apk --update --no-cache add git npm yarn autoconf g++ make && \
     docker-php-ext-install exif && \
     pecl install -f xdebug && \
-    pecl install -f apcu && \
-    pecl install -f apcu_bc && \
-    docker-php-ext-enable xdebug apcu apc && \
+    docker-php-ext-enable xdebug && \
     apk del --purge autoconf g++ make
 CMD ["/usr/local/sbin/php-fpm" , "-F"]
