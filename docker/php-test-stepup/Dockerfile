@@ -17,6 +17,8 @@ RUN apt-get update && apt-get install -y \
     libmhash-dev \
     libmcrypt-dev \
     file \
+    libgmp-dev \
+    libicu-dev \
     && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include \
     && docker-php-ext-configure gmp \
     && docker-php-ext-install gmp \
@@ -27,7 +29,10 @@ RUN apt-get update && apt-get install -y \
     && pecl install apcu \
     && pecl install apcu_bc-1.0.3 \
     && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
-    && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
+    && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini \
+    && docker-php-ext-install gmp \
+    && docker-php-ext-install intl    
+
 
 RUN docker-php-ext-enable xdebug
 RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini
