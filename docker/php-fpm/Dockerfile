@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-alpine AS fpmprod
+FROM php:8.1-fpm-alpine AS fpmprod
 RUN apk add --no-cache libxml2-dev freetype-dev && \
     docker-php-ext-install soap gd pdo_mysql opcache  
 
