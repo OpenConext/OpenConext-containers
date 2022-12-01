@@ -69,7 +69,7 @@ $metadata['https://gateway.stepup.example.com/authentication/metadata'] = array 
                     'encryption' => false,
                     'signing' => true,
                     'type' => 'X509Certificate',
-                    'X509Certificate' => '{{ gateway_saml_idp_publickey | depem }}',
+                    'X509Certificate' => depem(file_get_contents('/app/cert/idp.crt')),
                 ),
         ),
 );
@@ -109,7 +109,7 @@ $metadata['https://gateway.stepup.example.com/second-factor-only/metadata'] = ar
                     'encryption' => false,
                     'signing' => true,
                     'type' => 'X509Certificate',
-                    'X509Certificate' => '{{ gateway_saml_idp_publickey | depem }}',
+                    'X509Certificate' => depem(file_get_contents('/app/cert/idp.crt')),
                 ),
         ),
 );

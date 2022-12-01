@@ -16,7 +16,6 @@ RUN git reset --hard adf1eb8
 COPY conf/config.php /app/config/config.php
 COPY conf/authsources.php /app/config/authsources.php
 COPY conf/accountgen.inc /app/config/accountgen.inc
-COPY certificates/* /app/cert/
 COPY conf/saml20-idp-hosted.php /app/metadata/saml20-idp-hosted.php
 COPY conf/saml20-idp-remote.php /app/metadata/saml20-idp-remote.php
 COPY conf/saml20-sp-remote.php /app/metadata/saml20-sp-remote.php
