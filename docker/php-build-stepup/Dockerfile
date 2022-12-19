@@ -27,7 +27,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | b
     && nvm use default
 
     # Composer
-COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 # Fix npm
 RUN mkdir /.npm && chown -R "${NPM_UID}:${NPM_GID}" "/.npm"
