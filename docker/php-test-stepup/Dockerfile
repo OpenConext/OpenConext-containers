@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install gmp \
     && docker-php-ext-install pdo_mysql exif gd \
     ## Xdebug
-    && pecl install xdebug \
+    && pecl install xdebug-3.1.6 \
     ## APCu
     && pecl install apcu \
     && pecl install apcu_bc-1.0.3 \
