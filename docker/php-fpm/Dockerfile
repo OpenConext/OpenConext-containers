@@ -7,7 +7,7 @@ COPY ./conf/10-docker-opcache-openconext.conf /usr/local/etc/php/conf.d/
 CMD ["/usr/local/sbin/php-fpm" , "-F"]
 
 FROM fpmprod AS fpmdev
-COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY ./conf/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN apk --update --no-cache add git npm yarn autoconf g++ make && \
     docker-php-ext-install exif && \
