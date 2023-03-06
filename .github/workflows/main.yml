@@ -30,7 +30,7 @@ jobs:
     - name: Build the php-fpm prod container and push to GitHub Packages
       uses: docker/build-push-action@v2
       with:
-        tags: ghcr.io/openconext/openconext-containers/openconext-phpfpm:latest
+        tags: ghcr.io/openconext/openconext-containers/openconext-phpfpm:81
         context: docker/php-fpm/
         target: fpmprod
         push: true
@@ -38,7 +38,7 @@ jobs:
     - name: Build the php-fpm dev container and push to GitHub Packages
       uses: docker/build-push-action@v2
       with:
-        tags: ghcr.io/openconext/openconext-containers/openconext-phpfpm-dev:latest
+        tags: ghcr.io/openconext/openconext-containers/openconext-phpfpm-dev:81
         context: docker/php-fpm/
         target: fpmdev
         push: true
