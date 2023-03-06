@@ -1,4 +1,5 @@
 FROM php:8.1-fpm-alpine AS fpmprod
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 RUN apk add --no-cache libxml2-dev freetype-dev && \
     docker-php-ext-install soap gd pdo_mysql opcache  
 
