@@ -25,4 +25,13 @@ jobs:
       with:
         tags: ghcr.io/openconext/openconext-containers/openconext-php-build-eb:latest
         context: docker/php-build-eb/
+        file: docker/php-build-eb/Dockerfile
+        push: true
+
+    - name: Build the Apache container and push to GitHub Packages
+      uses: docker/build-push-action@v2
+      with:
+        tags: ghcr.io/openconext/openconext-containers/openconext-php74-build-eb:latest
+        context: docker/php-build-eb/
+        file: docker/php-build-eb/Dockerfile74
         push: true
