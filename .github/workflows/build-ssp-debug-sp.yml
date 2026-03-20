@@ -1,0 +1,29 @@
+name: Build docker SSP debug SP container
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-ssp-debug-sp:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Check out the repo
+      uses: actions/checkout@v2
+
+    - name: Log into GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build the SSP Debug SP container and push to GitHub Packages
+      uses: docker/build-push-action@v2
+      with:
+        tags: ghcr.io/openconext/openconext-containers/openconext-ssp-debug-sp:latest
+        context: docker/ssp-debug-sp/
+        push: true
