@@ -56,7 +56,7 @@ RUN source $NVM_DIR/nvm.sh \
     && npm install -g yarn
 
 # Composer
-COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 # Fix npm
 RUN mkdir /.npm && chown -R "${NPM_UID}:${NPM_GID}" "/.npm"

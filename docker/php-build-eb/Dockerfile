@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
 
 # Composer
-COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 # Fix npm
 RUN mkdir /.npm && chown -R "${NPM_UID}:${NPM_GID}" "/.npm"
